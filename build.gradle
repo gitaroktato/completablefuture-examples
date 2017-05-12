@@ -21,10 +21,12 @@ repositories {
 	mavenCentral()
 }
 
+ext['tomcat.version'] = '7.0.59'
 
 dependencies {
 	compile('org.springframework.boot:spring-boot-starter-jersey')
 	compile('org.springframework.boot:spring-boot-starter-web')
-	runtime('org.springframework.boot:spring-boot-devtools')
+	compile('org.springframework.boot:spring-boot-devtools')
+    compile group:'org.apache.tomcat', name:'tomcat-juli', version:property('tomcat.version')
 	testCompile('org.springframework.boot:spring-boot-starter-test')
 }

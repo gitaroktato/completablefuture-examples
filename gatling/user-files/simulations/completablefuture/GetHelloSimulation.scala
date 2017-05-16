@@ -18,11 +18,9 @@ class GetHelloSimulation extends Simulation {
 
 	val headers_0 = Map("Upgrade-Insecure-Requests" -> "1")
 
-    val uri1 = "http://localhost:8080/hello"
-
 	val getHello = repeat(25, "n") {
-		exec(http("get_helo")
-			.get("/hello")
+		exec(http("get_hello")
+			.get("/hello_async_oldtimer")
 			.headers(headers_0))
 	}
 	val scn = scenario("Get Hello").exec(getHello);

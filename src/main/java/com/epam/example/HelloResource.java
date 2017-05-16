@@ -1,5 +1,6 @@
 package com.epam.example;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import javax.ws.rs.GET;
@@ -12,39 +13,29 @@ import java.util.concurrent.CompletableFuture;
 @Path("/")
 public class HelloResource {
 
-    private static final int WAIT_TIME = 25;
+    @Autowired
+    private SlowService slowService;
 
     @GET
     @Path("/hello_async")
     public void helloAsync(@Suspended AsyncResponse response)
             throws InterruptedException {
-        CompletableFuture.supplyAsync(() -> {
-            try {
-                Thread.sleep(WAIT_TIME);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
-            return "hello";
-        }).thenApplyAsync(response::resume);
+        CompletableFuture.supplyAsync(() -> slowService.getMessage())
+                .thenApplyAsync(response::resume);
     }
 
     @GET
     @Path("/hello_async_oldtimer")
     public void helloOldTimer(@Suspended AsyncResponse response) {
         new Thread(() -> {
-            try {
-                Thread.sleep(WAIT_TIME);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
-            response.resume("hello");
+            String message = slowService.getMessage();
+            response.resume(message);
         }).start();
     }
 
     @GET
     @Path("/hello_sync")
     public String helloSync() throws InterruptedException {
-         Thread.sleep(WAIT_TIME);
-         return "hello";
+         return slowService.getMessage();
     }
 }

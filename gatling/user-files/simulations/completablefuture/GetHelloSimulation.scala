@@ -16,13 +16,26 @@ class GetHelloSimulation extends Simulation {
 		.acceptLanguageHeader("en-US,en;q=0.5")
 		.userAgentHeader("Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:50.0) Gecko/20100101 Firefox/50.0")
 
-	val headers_0 = Map("Upgrade-Insecure-Requests" -> "1")
+	val headers = Map("Upgrade-Insecure-Requests" -> "1")
 
-	val getHello = repeat(25, "n") {
-		exec(http("get_hello")
-			.get("/hello_async_oldtimer")
-			.headers(headers_0))
+	val times = 25
+	val helloSync = repeat(times, "n") {
+		exec(http("hello_sync")
+			.get("/hello_sync")
+			.headers(headers))
 	}
-	val scn = scenario("Get Hello").exec(getHello);
-	setUp(scn.inject(rampUsers(255) over (3 seconds))).protocols(httpProtocol)
+	val helloAsyncLegacy = repeat(times, "n") {
+		exec(http("hello_async_oldtimer")
+				.get("/hello_async_oldtimer")
+				.headers(headers))
+	}
+    val helloAsync = repeat(times, "n") {
+        exec(http("hello_async")
+                .get("/hello_async")
+                .headers(headers))
+    }
+	val scn = scenario("Get Hello").exec(helloSync, helloAsync, helloAsyncLegacy);
+	setUp(
+		scn.inject(rampUsers(255) over (3 seconds))
+	).protocols(httpProtocol)
 }

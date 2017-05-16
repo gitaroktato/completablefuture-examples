@@ -1,0 +1,10 @@
+{
+  "simulation": "completablefuture.RecordedSimulation",
+  "simulationId": "tomcat_7_sync",
+  "start": 1494927393570,
+  "description": "Tomcat 7 Synchronous",
+  "scenarios": ["Get Hello"],
+  "assertions": [
+
+  ]
+}

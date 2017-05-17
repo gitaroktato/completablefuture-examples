@@ -21,7 +21,7 @@ public class HelloResource {
     public void helloAsync(@Suspended AsyncResponse response)
             throws InterruptedException {
         CompletableFuture.supplyAsync(() -> slowService.getMessage())
-                .thenApplyAsync(response::resume);
+                .thenAcceptAsync(response::resume);
     }
 
     @GET
@@ -38,4 +38,12 @@ public class HelloResource {
     public String helloSync() throws InterruptedException {
          return slowService.getMessage();
     }
+
+    // TODO two requests in parallel
+
+    // TODO bulkheads?
+
+    // TODO exception handling
+
+    // TODO nr. of threads and queue size
 }

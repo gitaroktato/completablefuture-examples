@@ -37,6 +37,7 @@ class GetHelloSimulation extends Simulation {
 	val sync = scenario("Get Hello").exec(helloSync);
     val async = scenario("Get Hello Async").exec(helloAsync);
     val asyncLegacy = scenario("Get Hello Async Legacy").exec(helloAsyncLegacy);
+
 	setUp(
         sync.inject(rampUsers(75) over (3 seconds)),
         async.inject(rampUsers(75) over (3 seconds)),

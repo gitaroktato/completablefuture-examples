@@ -34,8 +34,12 @@ class GetHelloSimulation extends Simulation {
                 .get("/hello_async")
                 .headers(headers))
     }
-	val scn = scenario("Get Hello").exec(helloSync, helloAsync, helloAsyncLegacy);
+	val sync = scenario("Get Hello").exec(helloSync);
+    val async = scenario("Get Hello Async").exec(helloAsync);
+    val asyncLegacy = scenario("Get Hello Async Legacy").exec(helloAsyncLegacy);
 	setUp(
-		scn.inject(rampUsers(255) over (3 seconds))
+        sync.inject(rampUsers(75) over (3 seconds)),
+        async.inject(rampUsers(75) over (3 seconds)),
+        asyncLegacy.inject(rampUsers(75) over (3 seconds))
 	).protocols(httpProtocol)
 }

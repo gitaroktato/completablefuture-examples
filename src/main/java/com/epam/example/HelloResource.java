@@ -15,6 +15,8 @@ public class HelloResource {
 
     @Autowired
     private SlowService slowService;
+    @Autowired
+    private FlakyService flakyService;
 
     @GET
     @Path("/hello_async")
@@ -39,9 +41,26 @@ public class HelloResource {
          return slowService.getMessage();
     }
 
-    // TODO bulkheads?
+    @GET
+    @Path("/hello_flaky_sync")
+    public String helloFlakySync() throws InterruptedException {
+        return flakyService.getMessage();
+    }
+
+    @GET
+    @Path("/hello_flaky_async")
+    public void helloFlakyAsync(@Suspended AsyncResponse response)
+            throws InterruptedException {
+        CompletableFuture.supplyAsync(() -> flakyService.getMessage())
+                .thenAcceptAsync(response::resume)
+                .exceptionally((ex) -> {
+                    response.resume(ex);
+                    return null;
+                });
+    }
 
     // TODO exception handling
 
-    // TODO nr. of threads and queue size
+    // TODO Measure nr. of threads and queue size
+    // TODO slow requests
 }

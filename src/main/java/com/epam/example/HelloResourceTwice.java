@@ -8,6 +8,7 @@ import javax.ws.rs.Path;
 import javax.ws.rs.container.AsyncResponse;
 import javax.ws.rs.container.Suspended;
 import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.Executor;
 import java.util.concurrent.Executors;
 
 @Component
@@ -18,6 +19,10 @@ public class HelloResourceTwice {
     private SlowService slowService;
     @Autowired
     private AnotherSlowService otherSlowService;
+
+    private Executor firstPool = Executors.newSingleThreadExecutor();
+    private Executor secondPool = Executors.newSingleThreadExecutor();
+    private Executor thirdPool = Executors.newSingleThreadExecutor();
 
     @GET
     @Path("/hello_async")
@@ -36,11 +41,11 @@ public class HelloResourceTwice {
             throws InterruptedException {
         final CompletableFuture<String> callSlowService1, callSlowService2;
         callSlowService1 = CompletableFuture.supplyAsync(slowService::getMessage,
-                Executors.newSingleThreadExecutor());
+                firstPool);
         callSlowService2 = CompletableFuture.supplyAsync(otherSlowService::getMessage,
-                Executors.newSingleThreadExecutor());
+                secondPool);
         callSlowService1.thenAcceptBothAsync(callSlowService2,
-                (t,u) -> response.resume(t + u));
+                (t,u) -> response.resume(t + u), thirdPool);
     }
 
     @GET

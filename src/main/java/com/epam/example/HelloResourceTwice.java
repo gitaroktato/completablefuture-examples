@@ -7,9 +7,7 @@ import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import javax.ws.rs.container.AsyncResponse;
 import javax.ws.rs.container.Suspended;
-import java.util.Arrays;
 import java.util.concurrent.CompletableFuture;
-import java.util.concurrent.Future;
 
 @Component
 @Path("/twice")

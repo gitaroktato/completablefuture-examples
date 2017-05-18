@@ -5,9 +5,8 @@ import scala.concurrent.duration._
 import io.gatling.core.Predef._
 import io.gatling.http.Predef._
 import io.gatling.jdbc.Predef._
-import java.util.concurrent.TimeUnit
 
-class GetHelloFlakySimulationSlowly extends Simulation {
+class GetHelloSimulationSlowly extends Simulation {
 
 	val httpProtocol = http
 		.baseURL("http://localhost:8080")
@@ -21,20 +20,27 @@ class GetHelloFlakySimulationSlowly extends Simulation {
 
 	val times = 125
 	val helloSync = repeat(times, "n") {
-		exec(http("hello_flaky_sync")
-			.get("/hello_flaky_sync")
+		exec(http("hello_sync")
+			.get("/hello_sync")
 			.headers(headers)).pause(125 milliseconds)
 	}
+	val helloAsyncLegacy = repeat(times, "n") {
+		exec(http("hello_async_oldtimer")
+				.get("/hello_async_oldtimer")
+				.headers(headers)).pause(125 milliseconds)
+	}
     val helloAsync = repeat(times, "n") {
-        exec(http("hello_flaky_async")
-                .get("/hello_flaky_async")
+        exec(http("hello_async")
+                .get("/hello_async")
                 .headers(headers)).pause(125 milliseconds)
     }
 	val sync = scenario("Get Hello").exec(helloSync);
     val async = scenario("Get Hello Async").exec(helloAsync);
+    val asyncLegacy = scenario("Get Hello Async Legacy").exec(helloAsyncLegacy);
 
 	setUp(
-        sync.inject(rampUsers(5) over (3 seconds)),
-        async.inject(rampUsers(5) over (3 seconds))
+        sync.inject(rampUsers(5) over (15 seconds)),
+        async.inject(rampUsers(5) over (15 seconds)),
+        asyncLegacy.inject(rampUsers(5) over (15 seconds))
 	).protocols(httpProtocol)
 }

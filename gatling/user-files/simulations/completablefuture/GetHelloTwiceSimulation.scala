@@ -25,15 +25,22 @@ class GetHelloTwiceSimulation extends Simulation {
 			.headers(headers))
 	}
     val helloAsync = repeat(times, "n") {
-        exec(http("hello_async")
-                .get("/hello_async")
-                .headers(headers))
+		exec(http("hello_async")
+				.get("/hello_async")
+				.headers(headers))
+	}
+	val helloAsyncExecutors = repeat(times, "n") {
+		exec(http("hello_async_executors")
+				.get("/hello_async_executors")
+				.headers(headers))
     }
 	val sync = scenario("Get Hello").exec(helloSync);
     val async = scenario("Get Hello Async").exec(helloAsync);
+	val asyncExec = scenario("Get Hello Async Exec").exec(helloAsyncExecutors);
 
 	setUp(
         sync.inject(rampUsers(75) over (3 seconds)),
-        async.inject(rampUsers(75) over (3 seconds))
+        async.inject(rampUsers(75) over (3 seconds)),
+		asyncExec.inject(rampUsers(75) over (3 seconds))
 	).protocols(httpProtocol)
 }

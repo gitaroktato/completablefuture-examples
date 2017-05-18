@@ -39,8 +39,6 @@ public class HelloResource {
          return slowService.getMessage();
     }
 
-    // TODO two requests in parallel
-
     // TODO bulkheads?
 
     // TODO exception handling

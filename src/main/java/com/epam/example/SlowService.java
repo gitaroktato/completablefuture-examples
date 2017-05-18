@@ -6,7 +6,6 @@ import org.springframework.stereotype.Component;
 public class SlowService {
 
     private static final int WAIT_TIME = 25;
-    private volatile int index = 0;
 
     public String getMessage() throws RuntimeException {
         try {
@@ -14,7 +13,6 @@ public class SlowService {
         } catch (InterruptedException e) {
             throw new RuntimeException(e);
         }
-        ++index;
-        return "hello" + index;
+        return "hello";
     }
 }

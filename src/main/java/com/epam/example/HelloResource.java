@@ -76,5 +76,6 @@ public class HelloResource {
         return fastService.getMessage();
     }
 
-    // TODO Measure nr. of threads and queue size
+    // TODO test performance on EPAM Cloud
+    // TODO RXJava comparison?
 }

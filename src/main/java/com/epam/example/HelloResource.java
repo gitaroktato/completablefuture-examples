@@ -17,6 +17,8 @@ public class HelloResource {
     private SlowService slowService;
     @Autowired
     private FlakyService flakyService;
+    @Autowired
+    private FastService fastService;
 
     @GET
     @Path("/hello_async")
@@ -59,8 +61,19 @@ public class HelloResource {
                 });
     }
 
-    // TODO exception handling
+    @GET
+    @Path("/hello_async_fast")
+    public void helloAsyncFast(@Suspended AsyncResponse response)
+            throws InterruptedException {
+        CompletableFuture.supplyAsync(() -> fastService.getMessage())
+                .thenAcceptAsync(response::resume);
+    }
+
+    @GET
+    @Path("/hello_sync_fast")
+    public String helloFast() {
+        return fastService.getMessage();
+    }
 
     // TODO Measure nr. of threads and queue size
-    // TODO slow requests
 }

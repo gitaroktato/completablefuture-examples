@@ -10,8 +10,8 @@ import java.util.concurrent.ForkJoinPool;
 public class CompletableFutureApplication {
 
 	public static void main(String[] args) throws Exception {
-		ForkJoinPoolManaged managedPool = new ForkJoinPoolManaged(ForkJoinPool.commonPool());
-		managedPool.registerMBean();
+//		ForkJoinPoolManaged managedPool = new ForkJoinPoolManaged(ForkJoinPool.commonPool());
+//		managedPool.registerMBean();
 		SpringApplication.run(CompletableFutureApplication.class, args);
 	}
 }

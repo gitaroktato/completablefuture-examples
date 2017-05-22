@@ -26,6 +26,11 @@ public class ForkJoinPoolManaged implements ForkJoinPoolMXBean {
         return pool.getQueuedSubmissionCount();
     }
 
+    @Override
+    public long getQueuedTaskCount() {
+        return pool.getQueuedTaskCount();
+    }
+
     @Override public int getPoolSize() {
         return pool.getPoolSize();
     }

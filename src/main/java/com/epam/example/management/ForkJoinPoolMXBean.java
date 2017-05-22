@@ -4,6 +4,7 @@ public interface ForkJoinPoolMXBean {
     int getActiveThreadCount();
     int getRunningThreadCount();
     int getQueuedSubmissionCount();
+    long getQueuedTaskCount();
     int getPoolSize();
     long getStealCount();
 

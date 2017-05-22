@@ -20,6 +20,7 @@ class GetHelloFastSimulation extends Simulation {
 
 	val times = 5000
 	val numUsers = 125
+	val rampUpDuration = 30
 	//
 	val helloSync = repeat(times, "n") {
 		exec(http("hello_sync_fast")
@@ -35,7 +36,7 @@ class GetHelloFastSimulation extends Simulation {
 	val async = scenario("Get Hello Async").exec(helloAsync);
 
 	setUp(
-        //sync.inject(rampUsers(numUsers) over (3 seconds))
-        async.inject(rampUsers(numUsers) over (3 seconds))
+        sync.inject(rampUsers(numUsers) over (rampUpDuration seconds))
+        //async.inject(rampUsers(numUsers) over (rampUpDuration seconds))
 	).protocols(httpProtocol)
 }

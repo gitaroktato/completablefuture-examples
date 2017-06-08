@@ -1,0 +1,11 @@
+Attribute	Last	Minimum	Maximum	Average	σ
+ActiveThreadCount	0.0 	0.0 	0.0 	0.0 	0.0 
+Daemon Live Thread Count	146.0 	16.0 	146.0 	126.0126582278481 	39.75130820968907 
+Peak Live Thread Count	148.0 	19.0 	148.0 	126.28125000000003 	42.05390885518253 
+PoolSize	0.0 	0.0 	0.0 	0.0 	0.0 
+QueuedSubmissionCount	0.0 	0.0 	0.0 	0.0 	0.0 
+QueuedTaskCount	0.0 	0.0 	0.0 	0.0 	0.0 
+RunningThreadCount	0.0 	0.0 	0.0 	0.0 	0.0 
+StealCount	0.0 	0.0 	0.0 	0.0 	0.0 
+Total Live Thread Count	148.0 	18.0 	148.0 	128.0126582278481 	39.75130820968907 
+

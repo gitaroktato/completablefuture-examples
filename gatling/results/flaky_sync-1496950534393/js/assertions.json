@@ -1,0 +1,10 @@
+{
+  "simulation": "completablefuture.GetHelloFlakySimulation",
+  "simulationId": "flaky_sync",
+  "start": 1496950534393,
+  "description": "",
+  "scenarios": ["Get Hello"],
+  "assertions": [
+
+  ]
+}

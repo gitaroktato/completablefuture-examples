@@ -18,7 +18,10 @@ class GetHelloSimulation extends Simulation {
 
 	val headers = Map("Upgrade-Insecure-Requests" -> "1")
 
-	val times = 25
+	val times = 5000
+	val numUsers = 125
+	val rampUpDuration = 30
+
 	val helloSync = repeat(times, "n") {
 		exec(http("hello_sync")
 			.get("/hello_sync")
@@ -39,8 +42,8 @@ class GetHelloSimulation extends Simulation {
     val asyncLegacy = scenario("Get Hello Async Legacy").exec(helloAsyncLegacy);
 
 	setUp(
-        sync.inject(rampUsers(75) over (3 seconds)),
-        async.inject(rampUsers(75) over (3 seconds)),
-        asyncLegacy.inject(rampUsers(75) over (3 seconds))
+        sync.inject(rampUsers(numUsers) over (rampUpDuration seconds)),
+        async.inject(rampUsers(numUsers) over (rampUpDuration seconds)),
+        asyncLegacy.inject(rampUsers(numUsers) over (rampUpDuration seconds))
 	).protocols(httpProtocol)
 }

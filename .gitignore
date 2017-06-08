@@ -3,6 +3,7 @@
 !gradle/wrapper/gradle-wrapper.jar
 **/target
 gatling/target
+commands
 
 ### STS ###
 .apt_generated

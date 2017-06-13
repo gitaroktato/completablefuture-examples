@@ -1,0 +1,10 @@
+{
+  "simulation": "completablefuture.GetHelloSimulation",
+  "simulationId": "125ms_resp_async_old",
+  "start": 1497385106121,
+  "description": "",
+  "scenarios": ["Get Hello Async Legacy"],
+  "assertions": [
+
+  ]
+}

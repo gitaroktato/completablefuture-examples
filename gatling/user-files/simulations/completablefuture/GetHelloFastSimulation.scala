@@ -32,11 +32,18 @@ class GetHelloFastSimulation extends Simulation {
                 .get("/hello_async_fast")
                 .headers(headers))
     }
+    val helloRx = repeat(times, "n") {
+        exec(http("hello_rx")
+                .get("/hello_rx")
+                .headers(headers))
+    }
 	val sync = scenario("Get Hello").exec(helloSync);
 	val async = scenario("Get Hello Async").exec(helloAsync);
+	val rx = scenario("Get Hello RX").exec(helloRx);
 
 	setUp(
-        //sync.inject(rampUsers(numUsers) over (rampUpDuration seconds))
-        async.inject(rampUsers(numUsers) over (rampUpDuration seconds))
+	      //sync.inject(rampUsers(numUsers) over (rampUpDuration seconds))
+          //async.inject(rampUsers(numUsers) over (rampUpDuration seconds))
+          rx.inject(rampUsers(numUsers) over (rampUpDuration seconds))
 	).protocols(httpProtocol)
 }

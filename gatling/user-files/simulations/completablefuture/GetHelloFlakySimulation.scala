@@ -9,7 +9,7 @@ import io.gatling.jdbc.Predef._
 class GetHelloFlakySimulation extends Simulation {
 
 	val httpProtocol = http
-		.baseURL("http://ecsc00300525.epam.com:8080")
+		.baseURL("http://localhost:8080")
 		.inferHtmlResources()
 		.acceptHeader("text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8")
 		.acceptEncodingHeader("gzip, deflate")
@@ -36,7 +36,7 @@ class GetHelloFlakySimulation extends Simulation {
     val async = scenario("Get Hello Async").exec(helloAsync);
 
 	setUp(
-        //sync.inject(rampUsers(numUsers) over (rampUpDuration seconds))
-        async.inject(rampUsers(numUsers) over (rampUpDuration seconds))
+          //sync.inject(rampUsers(numUsers) over (rampUpDuration seconds))
+          async.inject(rampUsers(numUsers) over (rampUpDuration seconds))
 	).protocols(httpProtocol)
 }

@@ -42,8 +42,8 @@ class GetHelloSimulation extends Simulation {
     val asyncLegacy = scenario("Get Hello Async Legacy").exec(helloAsyncLegacy);
 
 	setUp(
-        sync.inject(rampUsers(numUsers) over (rampUpDuration seconds)),
-        async.inject(rampUsers(numUsers) over (rampUpDuration seconds)),
-        asyncLegacy.inject(rampUsers(numUsers) over (rampUpDuration seconds))
+        	//sync.inject(rampUsers(numUsers) over (rampUpDuration seconds))
+        	//async.inject(rampUsers(numUsers) over (rampUpDuration seconds))
+        	asyncLegacy.inject(rampUsers(numUsers) over (rampUpDuration seconds))
 	).protocols(httpProtocol)
 }

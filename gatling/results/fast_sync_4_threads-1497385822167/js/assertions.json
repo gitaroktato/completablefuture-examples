@@ -1,0 +1,10 @@
+{
+  "simulation": "completablefuture.GetHelloFastSimulation",
+  "simulationId": "fast_sync_4_threads",
+  "start": 1497385822167,
+  "description": "",
+  "scenarios": ["Get Hello"],
+  "assertions": [
+
+  ]
+}

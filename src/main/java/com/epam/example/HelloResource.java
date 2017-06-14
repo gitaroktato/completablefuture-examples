@@ -2,6 +2,8 @@ package com.epam.example;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import rx.Observable;
+import rx.schedulers.Schedulers;
 
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
@@ -27,6 +29,15 @@ public class HelloResource {
             throws InterruptedException {
         CompletableFuture.supplyAsync(() -> slowService.getMessage())
                 .thenAcceptAsync(response::resume);
+    }
+
+    @GET
+    @Path("/hello_rx")
+    public void helloRx(@Suspended AsyncResponse response)
+            throws InterruptedException {
+        Observable.fromCallable(() -> slowService.getMessage())
+                .subscribeOn(Schedulers.io())
+                .subscribe(response::resume);
     }
 
     @GET
